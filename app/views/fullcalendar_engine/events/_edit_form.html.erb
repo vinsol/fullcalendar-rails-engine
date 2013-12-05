@@ -1,0 +1,51 @@
+<%= form_for @event, :html => { :id => 'event_form' } do |f| %>
+<p>
+  <%=f.label :title %>
+  <br/>
+  <%=f.text_field :title %>
+</p>
+<p>
+  <%=f.label :description %>
+  <br/>
+  <%=f.text_area :description, :rows => 4, :cols => 30 %>
+</p>
+<p>
+  <%=f.label :starttime, 'Start Time' %>
+  <br/>
+  <%=f.datetime_select :starttime %>
+</p>
+<p>
+  <%=f.label :endtime, 'End Time' %>
+  <br/>
+  <%=f.datetime_select :endtime %>
+</p>
+<p>
+  <%=f.label :all_day %>
+  <%=f.check_box :all_day %>
+</p>
+<%if false%>
+<%period = (@event.event_series)? @event.event_series.period : nil -%>
+<p>
+  <%=f.label :period, "Repeats" %>
+  <%=f.select :period, FullcalendarEngine::Event::REPEATS,{:selected => period}, :onchange => "showPeriodAndFrequency(this.value);" %>
+</p>
+<%frequency = (@event.event_series)?@event.event_series.frequency : nil -%>
+<p id = "frequency" style = "display:<%(period)? '' : 'none'%>;">
+  <%=f.label :frequency, "Repeat every" %>
+  <%=f.select :frequency, (1..30).to_a, {:selected => frequency} %> <span id = "period"></span>
+</p>
+<%end%>
+<%=f.hidden_field :id, :value => @event.id%>
+<%=f.hidden_field :commit_button, :value => ""%>
+<p>
+  <%if @event.event_series -%>
+  <%=f.submit 'Update Only This Occurrence', :onclick => "document.getElementById('event_commit_button').value = this.value"%>
+  <%=f.submit 'Update All Occurrence', :onclick => "document.getElementById('event_commit_button').value = this.value"%>
+  <%=f.submit 'Update All Following Occurrence', :onclick => "document.getElementById('event_commit_button').value = this.value"%>
+  <%else-%>
+  <%=f.submit 'Update', :onclick => "document.getElementById('event_commit_button').value = this.value"%>
+  <%end-%>
+  
+  <span id = "updating_events" class="spinner" style = "display:none;">Updating, Please wait...</span>
+</p>
+<%end %>

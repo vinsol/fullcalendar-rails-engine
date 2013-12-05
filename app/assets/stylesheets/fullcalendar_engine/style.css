@@ -1,0 +1,23 @@
+body{
+  font-size: 12px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+#loading{
+  position: absolute; 
+  right: 0px; 
+  top: 0px; 
+  background-color: #dd0000; 
+  font-weight:bold;
+  color: white; 
+  margin: 5px; 
+  padding: 3px;
+}
+
+span > div#loading {
+  position: fixed;
+}
+
+h1{
+font-size: 16px;
+}
