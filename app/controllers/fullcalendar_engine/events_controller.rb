@@ -27,7 +27,7 @@ module FullcalendarEngine
 
 
     def get_events
-      @events = Event.find(:all, :conditions => ["starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'"] )
+      @events = Event.where("starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'")
       events = [] 
       @events.each do |event|
         events << {:id => event.id, :title => event.title, :description => event.description || "Some cool description here...", :start => "#{event.starttime.iso8601}", :end => "#{event.endtime.iso8601}", :allDay => event.all_day, :recurring => (event.event_series_id)? true: false}
@@ -38,7 +38,7 @@ module FullcalendarEngine
 
 
     def move
-      @event = Event.find_by_id params[:id]
+      @event = Event.where(:id => params[:id]).first
       if @event
         @event.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.starttime))
         @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
@@ -50,7 +50,7 @@ module FullcalendarEngine
 
 
     def resize
-      @event = Event.find_by_id params[:id]
+      @event = Event.where(:id => params[:id]).first
       if @event
         @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
         @event.save
@@ -59,12 +59,12 @@ module FullcalendarEngine
     end
 
     def edit
-      @event = Event.find_by_id(params[:id])
+      @event = Event.where(:id => params[:id]).first
       render :json => { :form => render_to_string(:partial => 'edit_form') } 
     end
 
     def update
-      @event = Event.find_by_id(params[:event][:id])
+      @event = Event.where(:id => params[:event][:id]).first
       if params[:event][:commit_button] == "Update All Occurrence"
         @events = @event.event_series.events #.find(:all, :conditions => ["starttime > '#{@event.starttime.to_formatted_s(:db)}' "])
         @event.update_events(@events, event_params)
@@ -79,7 +79,7 @@ module FullcalendarEngine
     end  
 
     def destroy
-      @event = Event.find_by_id(params[:id])
+      @event = Event.where(:id => params[:id]).first
       if params[:delete_all] == 'true'
         @event.event_series.destroy
       elsif params[:delete_all] == 'future'
