@@ -5,21 +5,18 @@ Installation
 
 Add fullcalendar_engine to your Gemfile:
 
-```ruby
-gem 'fullcalendar_engine'
-```
+
+  gem 'fullcalendar_engine'
+
 
 Bundle your dependencies and run the installation generator:
 
-```shell
-bundle
-bundle exec rails g fullcalendar_engine:install
-```
+  bundle
+  bundle exec rails g fullcalendar_engine:install
 
 Declare routes
 
-```ruby
   mount FullcalendarEngine::Engine => "/fullcalendar_engine"
-```
+
 
 This project rocks and uses MIT-LICENSE.
