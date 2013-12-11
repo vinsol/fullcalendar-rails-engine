@@ -1,5 +1,41 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
+if (typeof(FullcalendarEngine) === 'undefined') { FullcalendarEngine = {}; }
+
+
+FullcalendarEngine.Form = {
+  display: function(options) {
+
+    if (typeof(options) == 'undefined') { options = {} }
+    $('#event_form').trigger('reset');
+
+    var startTime = options['starttime'] || new Date(), endTime = new Date(startTime);
+    endTime.setMinutes(startTime.getMinutes() + 15);
+
+    this.setTime('#event_starttime', startTime)
+    this.setTime('#event_endtime', endTime)
+
+    $('#event_all_day').attr('checked', options['allDay'])
+
+    $('#create_event_dialog').dialog({
+      title: 'New Event',
+      modal: true,
+      width: 500,
+      close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
+    });
+  },
+
+  setTime: function(type, time) {
+    var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
+    $year.val(time.getFullYear());
+    $month.prop('selectedIndex', time.getMonth());
+    $day.prop('selectedIndex', time.getDate() - 1);
+    $hour.prop('selectedIndex', time.getHours());
+    $minute.prop('selectedIndex', time.getMinutes());
+  }
+
+}
+
 function moveEvent(event, dayDelta, minuteDelta, allDay){
     jQuery.ajax({
         data: 'id=' + event.id + '&title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&all_day=' + allDay + '&authenticity_token=' + authenticity_token,

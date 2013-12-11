@@ -6,7 +6,7 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
 </center>
 <br>
 <p>
-  <%=link_to 'Create Event', new_event_url, :id => 'new_event' %>
+  <%=link_to 'Create Event', 'javascript:void()', :id => 'new_event' %>
 </p>
 
 <script>
@@ -16,25 +16,7 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
       // page is now ready, initialize the calendar...
       $('#new_event').click(function(event) {
         event.preventDefault();
-        var url = $(this).attr('href');
-        $.ajax({
-          url: url,
-          beforeSend: function() {
-            $('#loading').show();
-          },
-          complete: function() {
-            $('#loading').hide();
-          },
-          success: function(data) {
-            $('#create_event').replaceWith(data['form']);
-            $('#create_event_dialog').dialog({
-              title: 'New Event',
-              modal: true,
-              width: 500,
-              close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
-            });
-          }
-        });
+        FullcalendarEngine.Form.display()
       });
 
       $('#calendar').fullCalendar({
@@ -78,7 +60,9 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
               showEventDetails(event);
           },
       
-      
+          dayClick: function( date, allDay, jsEvent, view ) { 
+            FullcalendarEngine.Form.display({starttime: new Date(date), allDay: allDay})
+          }
       
       
       });
@@ -99,6 +83,5 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
   </div>
 </div>
 <div id = "create_event_dialog" class="dialog" style ="display:none;">
-  <div id = "create_event">
-  </div>
+  <%= render 'form' %>
 </div>

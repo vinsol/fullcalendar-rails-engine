@@ -2,10 +2,6 @@ require_dependency "fullcalendar_engine/application_controller"
 
 module FullcalendarEngine
   class EventsController < ApplicationController
-    def new
-      @event = Event.new(:endtime => 1.hour.from_now, :period => "Does not repeat")
-      render :json => {:form => render_to_string(:partial => 'form')}
-    end
 
     def create
       if params[:event][:period] == "Does not repeat"
@@ -20,11 +16,6 @@ module FullcalendarEngine
         render :text => event.errors.full_messages.to_sentence, :status => 422
       end
     end
-
-    def index
-      
-    end
-
 
     def get_events
       @events = Event.where("starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'")
