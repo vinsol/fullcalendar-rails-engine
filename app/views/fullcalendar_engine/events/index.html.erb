@@ -59,9 +59,9 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
           eventClick: function(event, jsEvent, view){
               showEventDetails(event);
           },
-      
-          dayClick: function( date, allDay, jsEvent, view ) { 
-            FullcalendarEngine.Form.display({starttime: new Date(date), allDay: allDay})
+          selectable: true,
+          select: function( startDate, endDate, allDay, jsEvent, view ) {
+            FullcalendarEngine.Form.display({ starttime: new Date(startDate.getTime()), endtime: new Date(endDate.getTime()), allDay: allDay })
           }
       
       

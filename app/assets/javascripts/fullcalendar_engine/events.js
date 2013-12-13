@@ -9,8 +9,9 @@ FullcalendarEngine.Form = {
     if (typeof(options) == 'undefined') { options = {} }
     $('#event_form').trigger('reset');
 
-    var startTime = options['starttime'] || new Date(), endTime = new Date(startTime);
-    endTime.setMinutes(startTime.getMinutes() + 15);
+    var startTime = options['starttime'] || new Date(), endTime = options['endtime'] || new Date(startTime.getTime());
+
+    if(startTime.getTime() == endTime.getTime()) { endTime.setMinutes(startTime.getMinutes() + 15); }
 
     this.setTime('#event_starttime', startTime)
     this.setTime('#event_endtime', endTime)
