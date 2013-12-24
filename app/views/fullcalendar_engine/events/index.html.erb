@@ -20,15 +20,11 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
       });
 
       $('#calendar').fullCalendar({
-          editable: true,
-          header: {
-              left: 'prev,next today',
-              center: 'title',
-              right: 'month,agendaWeek,agendaDay'
-          },
-          defaultView: 'agendaWeek',
-          height: 500,
-          slotMinutes: 15,
+          editable: <%= FullcalendarEngine::Configuration['editable'] %>,
+          header: <%= FullcalendarEngine::Configuration['header'].to_json.html_safe %>,
+          defaultView: "<%= FullcalendarEngine::Configuration['defaultView'] %>",
+          height: <%= FullcalendarEngine::Configuration['height'] %>,
+          slotMinutes: <%= FullcalendarEngine::Configuration['slotMinutes'] %>,
           loading: function(bool){
               if (bool) 
                   $('#loading').show();
@@ -37,7 +33,7 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
           },
           events: "fullcalendar_engine/events/get_events",
           timeFormat: 'h:mm t{ - h:mm t} ',
-          dragOpacity: "0.5",
+          dragOpacity: "<%= FullcalendarEngine::Configuration['dragOpacity'] %>",
           eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
 //              if (confirm("Are you sure about this change?")) {
                   moveEvent(event, dayDelta, minuteDelta, allDay);
@@ -59,7 +55,7 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
           eventClick: function(event, jsEvent, view){
               showEventDetails(event);
           },
-          selectable: true,
+          selectable: <%= FullcalendarEngine::Configuration['selectable'] %>,
           select: function( startDate, endDate, allDay, jsEvent, view ) {
             FullcalendarEngine.Form.display({ starttime: new Date(startDate.getTime()), endtime: new Date(endDate.getTime()), allDay: allDay })
           }
