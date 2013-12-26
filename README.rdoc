@@ -18,5 +18,11 @@ Declare routes
 
   mount FullcalendarEngine::Engine => "/fullcalendar_engine"
 
+Create Single Event
 
+  FullcalendarEngine::Event.create :title => 'title', :description => 'description', :starttime => Time.current, :endtime => Time.current + 10.minute
+
+Create Event Series
+
+  FullcalendarEngine::EventSeries.create :title => 'title', :description => 'description', :starttime => Time.current, :endtime => Time.current + 10.minute, :period => 'Daily|monthly|yearly', :frequency => '4'
 This project rocks and uses MIT-LICENSE.
