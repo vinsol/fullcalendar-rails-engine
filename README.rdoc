@@ -26,3 +26,18 @@ Create Event Series
 
   FullcalendarEngine::EventSeries.create :title => 'title', :description => 'description', :starttime => Time.current, :endtime => Time.current + 10.minute, :period => 'Daily|monthly|yearly', :frequency => '4'
 This project rocks and uses MIT-LICENSE.
+
+Configuration Options
+  create config/fullcalendar.yml
+  
+  'editable': true
+  'header': {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+          }
+  'defaultView': 'agendaWeek'
+  'height': 500
+  'slotMinutes': 15
+  'dragOpacity': 0.5
+  'selectable': true
