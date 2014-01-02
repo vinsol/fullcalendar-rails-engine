@@ -3,11 +3,13 @@ require_dependency "fullcalendar_engine/application_controller"
 module FullcalendarEngine
   class EventsController < ApplicationController
 
+    layout FullcalendarEngine::Configuration['layout'] || "application"
+
     def create
       if params[:event][:period] == "Does not repeat"
         event = Event.new(event_params)
       else
-        #      @event_series = EventSeries.new(:frequency => params[:event][:frequency], :period => params[:event][:repeats], :starttime => params[:event][:starttime], :endtime => params[:event][:endtime], :all_day => params[:event][:all_day])
+        # @event_series = EventSeries.new(:frequency => params[:event][:frequency], :period => params[:event][:repeats], :starttime => params[:event][:starttime], :endtime => params[:event][:endtime], :all_day => params[:event][:all_day])
         event = EventSeries.new(event_params)
       end
       if event.save
@@ -17,16 +19,20 @@ module FullcalendarEngine
       end
     end
 
+    def new
+      respond_to do |format|
+        format.js
+      end
+    end
+
     def get_events
       @events = Event.where("starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'")
-      events = [] 
+      events = []
       @events.each do |event|
         events << {:id => event.id, :title => event.title, :description => event.description || "Some cool description here...", :start => "#{event.starttime.iso8601}", :end => "#{event.endtime.iso8601}", :allDay => event.all_day, :recurring => (event.event_series_id)? true: false}
       end
       render :text => events.to_json
     end
-
-
 
     def move
       @event = Event.where(:id => params[:id]).first
@@ -38,7 +44,6 @@ module FullcalendarEngine
       end
       render :nothing => true
     end
-
 
     def resize
       @event = Event.where(:id => params[:id]).first
