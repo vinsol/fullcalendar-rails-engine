@@ -27,7 +27,7 @@
 <%period = (@event.event_series)? @event.event_series.period : nil -%>
 <p>
   <%=f.label :period, "Repeats" %>
-  <%=f.select :period, FullcalendarEngine::Event::REPEATS,{:selected => period}, :onchange => "showPeriodAndFrequency(this.value);" %>
+  <%=f.select :period, FullcalendarEngine::Event::REPEATS,{:selected => period}, :onchange => "FullcalendarEngine.Events.showPeriodAndFrequency(this.value);" %>
 </p>
 <%frequency = (@event.event_series)?@event.event_series.frequency : nil -%>
 <p id = "frequency" style = "display:<%(period)? '' : 'none'%>;">
