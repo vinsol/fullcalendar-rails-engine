@@ -7,11 +7,11 @@ require "fullcalendar_engine/version"
 Gem::Specification.new do |s|
   s.name        = "fullcalendar_engine"
   s.version     = FullcalendarEngine::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of FullcalendarEngine."
-  s.description = "TODO: Description of FullcalendarEngine."
+  s.authors     = ["Team Vinsol"]
+  s.email       = ["info@vinsol.com"]
+  s.homepage    = "http://vinsol.com"
+  s.summary     = "Engine Implementation of jQuery Full Calendar"
+  s.description = "Engine Implementation of jQuery Full Calendar"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
