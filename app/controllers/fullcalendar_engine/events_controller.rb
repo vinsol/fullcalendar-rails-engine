@@ -5,6 +5,7 @@ module FullcalendarEngine
 
     layout FullcalendarEngine::Configuration['layout'] || "application"
 
+    before_filter :load_event, :only => [:edit, :update, :delete, :move, :resize]
     before_filter :determine_event_type, :only => :create
 
     def create
@@ -31,7 +32,6 @@ module FullcalendarEngine
     end
 
     def move
-      @event = Event.where(:id => params[:id]).first
       if @event
         @event.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.starttime))
         @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
@@ -42,7 +42,6 @@ module FullcalendarEngine
     end
 
     def resize
-      @event = Event.where(:id => params[:id]).first
       if @event
         @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
         @event.save
@@ -51,16 +50,15 @@ module FullcalendarEngine
     end
 
     def edit
-      @event = Event.where(:id => params[:id]).first
       render :json => { :form => render_to_string(:partial => 'edit_form') } 
     end
 
     def update
-      @event = Event.where(:id => params[:event][:id]).first
-      if params[:event][:commit_button] == "Update All Occurrence"
+      case params[:event][:commit_button]
+      when "Update All Occurrence"
         @events = @event.event_series.events #.find(:all, :conditions => ["starttime > '#{@event.starttime.to_formatted_s(:db)}' "])
         @event.update_events(@events, event_params)
-      elsif params[:event][:commit_button] == "Update All Following Occurrence"
+      when "Update All Following Occurrence"
         @events = @event.event_series.events.find(:all, :conditions => ["starttime > '#{@event.starttime.to_formatted_s(:db)}' "])
         @event.update_events(@events, event_params)
       else
@@ -71,19 +69,24 @@ module FullcalendarEngine
     end  
 
     def destroy
-      @event = Event.where(:id => params[:id]).first
-      if params[:delete_all] == 'true'
+      case params[:delete_all]
+      when "true"
         @event.event_series.destroy
-      elsif params[:delete_all] == 'future'
+      when "future"
         @events = @event.event_series.events.find(:all, :conditions => ["starttime > '#{@event.starttime.to_formatted_s(:db)}' "])
-        @event.event_series.events.delete(@events)
+        @event.event_series.events.delete(@events)  
       else
         @event.destroy
       end
-      render :nothing => true   
+      render :nothing => true
     end
 
     private
+
+      def load_event
+        @event = Event.where(:id => params[:id]).first
+      end
+
       def event_params
         params.require(:event).permit('title', 'description', 'starttime(1i)', 'starttime(2i)', 'starttime(3i)', 'starttime(4i)', 'starttime(5i)', 'endtime(1i)', 'endtime(2i)', 'endtime(3i)', 'endtime(4i)', 'endtime(5i)', 'all_day', 'period', 'frequency', 'commit_button')
       end
