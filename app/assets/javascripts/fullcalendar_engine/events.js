@@ -84,6 +84,7 @@ FullcalendarEngine = {
       $delete_event       = $('<span />').attr("id", "delete_event")
       if (event.recurring) {
         title = event.title + "(Recurring)";
+        // Cannot be refactored as of now, the event bubbling of the eventClick of the fullCalendar is the culprit
         $delete_event.html("&nbsp; <a href = 'javascript:void(0);' onclick ='FullcalendarEngine.Events.delete(" + event.id + ", " + false + ")'>Delete Only This Occurrence</a>");
         $delete_event.append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='FullcalendarEngine.Events.delete(" + event.id + ", " + true + ")'>Delete All In Series</a>")
         $delete_event.append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='FullcalendarEngine.Events.delete(" + event.id + ", \"future\")'>Delete All Future Events</a>")
