@@ -1,1 +1,1 @@
-END_TIME = Date.parse("1 Jan, 2020").to_time
+RECURRING_EVENTS_UPTO = (Date.today.beginning_of_year + 5.years).to_time
