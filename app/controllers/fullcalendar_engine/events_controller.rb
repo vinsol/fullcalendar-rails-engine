@@ -5,14 +5,10 @@ module FullcalendarEngine
 
     layout FullcalendarEngine::Configuration['layout'] || "application"
 
+    before_filter :determine_event_type, :only => :create
+
     def create
-      if params[:event][:period] == "Does not repeat"
-        event = Event.new(event_params)
-      else
-        # @event_series = EventSeries.new(:frequency => params[:event][:frequency], :period => params[:event][:repeats], :starttime => params[:event][:starttime], :endtime => params[:event][:endtime], :all_day => params[:event][:all_day])
-        event = EventSeries.new(event_params)
-      end
-      if event.save
+      if @event.save
         render :nothing => true
       else
         render :text => event.errors.full_messages.to_sentence, :status => 422
@@ -91,5 +87,15 @@ module FullcalendarEngine
       def event_params
         params.require(:event).permit('title', 'description', 'starttime(1i)', 'starttime(2i)', 'starttime(3i)', 'starttime(4i)', 'starttime(5i)', 'endtime(1i)', 'endtime(2i)', 'endtime(3i)', 'endtime(4i)', 'endtime(5i)', 'all_day', 'period', 'frequency', 'commit_button')
       end
+
+      def determine_event_type
+        if params[:event][:period] == "Does not repeat"
+          @event = Event.new(event_params)
+        else
+          # @event_series = EventSeries.new(:frequency => params[:event][:frequency], :period => params[:event][:repeats], :starttime => param
+          @event = EventSeries.new(event_params)
+        end
+      end
+
   end
 end
