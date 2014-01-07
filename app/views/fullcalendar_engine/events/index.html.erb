@@ -7,6 +7,14 @@
   app_path              = full_calendar_options["mount_path"]
 <% end %>
 
+<div>
+  <div id='calendar'></div>
+</div>
+<div id="event_desc_dialog" class="dialog" style="display:none;"></div>
+<div id="create_event_dialog" class="dialog" style ="display:none;">
+  <%= render 'form' %>
+</div>
+
 <script>
   $(document).ready(function(){
     $('#calendar').fullCalendar(full_calendar_options);
@@ -17,10 +25,3 @@
     });
   });
 </script>
-<div>
-  <div id='calendar'></div>
-</div>
-<div id="event_desc_dialog" class="dialog" style="display:none;"></div>
-<div id="create_event_dialog" class="dialog" style ="display:none;">
-  <%= render 'form' %>
-</div>
