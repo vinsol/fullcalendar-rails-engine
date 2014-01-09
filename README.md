@@ -48,4 +48,8 @@ mount_path: "<path you have mounted your engine on>"
 
 The engine can have its own layout, you can add `layout` option to the configuration file. Besides this, all the options which are available with the fullcalendar.js are listed in the *`fullcalendar.yml.dummy`* file.
 ### NOTE: 
-**This engine uses the `strong_parameters` gem as one of its dependencies. If you are mounting this app in Rails 3, then disable the default whitelisting in Rails 3.2 or put the required attributes in the attr_accessible call in the model.**
+**This engine requires the `strong_parameters` gem as one of its dependencies. If you are mounting this app in Rails 3, then add the following line your `Gemfile`**
+```
+gem "strong_parameters", "0.1.4"
+```
+and do the desired changes that are specified on the `strong_parameter`s github page.
