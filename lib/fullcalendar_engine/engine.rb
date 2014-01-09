@@ -1,3 +1,5 @@
+require 'strong_parameters'
+
 module FullcalendarEngine
   class Engine < ::Rails::Engine
     isolate_namespace FullcalendarEngine
