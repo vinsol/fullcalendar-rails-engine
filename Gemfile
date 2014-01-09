@@ -1,3 +1,6 @@
+# FIXME: Please Remove Gemfile.lock of engine from VCS.
+
+# FIXME: Can we remove this line? This is because, when the engine is mounted, and the bundle is run on the host app, we would be hitting the rubygems multiple times.
 source "https://rubygems.org"
 
 # Declare your gem's dependencies in fullcalendar_engine.gemspec.

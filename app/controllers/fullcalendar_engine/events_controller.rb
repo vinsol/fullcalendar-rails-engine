@@ -88,6 +88,7 @@ module FullcalendarEngine
       end
 
       def event_params
+        # FIXME: Exception thrown while creating events. Please fix.
         params.require(:event).permit('title', 'description', 'starttime(1i)', 'starttime(2i)', 'starttime(3i)', 'starttime(4i)', 'starttime(5i)', 'endtime(1i)', 'endtime(2i)', 'endtime(3i)', 'endtime(4i)', 'endtime(5i)', 'all_day', 'period', 'frequency', 'commit_button')
       end
 

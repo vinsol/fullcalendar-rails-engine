@@ -8,6 +8,7 @@ module FullcalendarEngine
 
     belongs_to :event_series
 
+    # FIXME: Can be replaced with Symbols.
     REPEATS = [
                 "Does not repeat",
                 "Daily"          ,
