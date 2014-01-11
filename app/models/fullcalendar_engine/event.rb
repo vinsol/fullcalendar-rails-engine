@@ -8,7 +8,8 @@ module FullcalendarEngine
 
     belongs_to :event_series
 
-    # FIXME: Can be replaced with Symbols.
+    # TODO: Can be replaced with Symbols, Or better OpenStruct. Like: Daily -> days
+    # Then EventSeries#recurring_period can be simplified
     REPEATS = [
                 "Does not repeat",
                 "Daily"          ,
