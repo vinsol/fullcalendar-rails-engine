@@ -18,5 +18,4 @@ Gem::Specification.new do |s|
 
   # FIXME: Make it more loose. As the engine also works on rails 3.
   s.add_dependency "rails"
-  s.add_dependency "strong_parameters"
 end

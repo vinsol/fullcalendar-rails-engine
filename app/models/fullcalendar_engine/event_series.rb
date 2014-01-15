@@ -1,6 +1,6 @@
 module FullcalendarEngine
   class EventSeries < ActiveRecord::Base
-    include ActiveModel::ForbiddenAttributesProtection
+    
     attr_accessor :title, :description, :commit_button
 
     validates :frequency, :period, :starttime, :endtime, :title, :description, :presence => true
