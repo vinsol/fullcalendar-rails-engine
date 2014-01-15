@@ -38,16 +38,7 @@ module FullcalendarEngine
     end
 
     def recurring_period(period)
-      case period
-        when 'Daily'
-          'days'
-        when 'Weekly'
-          'weeks'
-        when 'Monthly'
-          'months'
-        when 'Yearly'
-          'years'
-      end
+      Event::REPEATS.key(period).to_s.downcase
     end
 
     private 

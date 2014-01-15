@@ -9,15 +9,15 @@ module FullcalendarEngine
     belongs_to :event_series
 
     # TODO: Can be replaced with Symbols, Or better OpenStruct. Like: Daily -> days
-    # Then EventSeries#recurring_period can be simplified
-    REPEATS = [
-                "Does not repeat",
-                "Daily"          ,
-                "Weekly"         ,
-                "Monthly"        ,
-                "Yearly"         
-    ]
-
+    # Then EventSeries#recurring_period can be simplified [fixed]
+    REPEATS = {
+      :no_repeat => "Does not repeat",
+      :days      => "Daily",
+      :weeks     => "Weekly",
+      :months    => "Monthly",
+      :years     => "Yearly"
+    }
+    
     def validate_timings
       if (starttime >= endtime) and !all_day
         errors[:base] << "Start Time must be less than End Time"
