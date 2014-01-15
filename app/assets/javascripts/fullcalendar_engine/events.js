@@ -44,7 +44,10 @@ FullcalendarEngine = {
         data: 'title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&all_day=' + allDay + '&authenticity_token=' + FullcalendarEngine.Form.authenticity_token(),
         dataType: 'script',
         type: 'post',
-        url: FullcalendarEngine.app_path() + "/events/" + event.id + "/move"
+        url: FullcalendarEngine.app_path() + "/events/" + event.id + "/move",
+        error: function(xhr){
+          alert(JSON.parse(xhr.responseText)["message"])
+        }
       });
     },
     resize: function(event, dayDelta, minuteDelta){
@@ -52,7 +55,10 @@ FullcalendarEngine = {
         data: 'title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&authenticity_token=' + FullcalendarEngine.Form.authenticity_token(),
         dataType: 'script',
         type: 'post',
-        url: FullcalendarEngine.app_path() + "/events/" + event.id + "/resize"
+        url: FullcalendarEngine.app_path() + "/events/" + event.id + "/resize",
+        error: function(xhr){
+          alert(JSON.parse(xhr.responseText)["message"])
+        }
       });
     },
     edit: function(event_id){

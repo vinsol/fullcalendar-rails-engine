@@ -30,8 +30,8 @@ module FullcalendarEngine
       @events.each do |event|
         events << {:id => event.id, :title => event.title, :description => event.description || "Some cool description here...", :start => "#{event.starttime.iso8601}", :end => "#{event.endtime.iso8601}", :allDay => event.all_day, :recurring => (event.event_series_id)? true: false}
       end
-      # TODO: Render json instead of text?
-      render :text => events.to_json
+      # TODO: Render json instead of text? [fixed]
+      render :json => events.to_json
     end
 
     def move
@@ -88,8 +88,11 @@ module FullcalendarEngine
     private
 
       def load_event
-        # TODO: What if event not found ??
+        # TODO: What if event not found ?? [fixed]
         @event = Event.where(:id => params[:id]).first
+        unless @event
+          render :json => {:message => "Event Not Found.."}, :status => 404 and return
+        end
       end
 
       def event_params
