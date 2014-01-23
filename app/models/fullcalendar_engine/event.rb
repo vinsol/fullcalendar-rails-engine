@@ -1,6 +1,6 @@
 module FullcalendarEngine
   class Event < ActiveRecord::Base
-    
+
     attr_accessor :period, :frequency, :commit_button
 
     validates :title, :description, :presence => true
@@ -8,8 +8,6 @@ module FullcalendarEngine
 
     belongs_to :event_series
 
-    # TODO: Can be replaced with Symbols, Or better OpenStruct. Like: Daily -> days
-    # Then EventSeries#recurring_period can be simplified [fixed]
     REPEATS = {
       :no_repeat => "Does not repeat",
       :days      => "Daily",
