@@ -1,5 +1,7 @@
 #FullcalendarEngine
 
+### This engine is made only on Rails 4 apps.
+
 ### Installation
 
 Add fullcalendar_engine to your Gemfile:
@@ -47,9 +49,3 @@ mount_path: "<path you have mounted your engine on>"
 ```
 
 The engine can have its own layout, you can add `layout` option to the configuration file. Besides this, all the options which are available with the fullcalendar.js are listed in the *`fullcalendar.yml.dummy`* file.
-### NOTE: 
-**This engine requires the `strong_parameters` gem as one of its dependencies. If you are mounting this app in Rails 3, then add the following line your `Gemfile`**
-```
-gem "strong_parameters", "0.1.4"
-```
-and do the desired changes that are specified on the `strong_parameter`s github page.
