@@ -1,4 +1,5 @@
-config = File.exists?('config/fullcalendar.yml') ? YAML.load_file("config/fullcalendar.yml") || {} : {}
+FULLCALENDAR_FILE_PATH = Rails.root.join('config', 'fullcalendar.yml')
+config = File.exists?(FULLCALENDAR_FILE_PATH) ? YAML.load_file(FULLCALENDAR_FILE_PATH) || {} : {}
 FullcalendarEngine::Configuration = {
   'editable'    => true,
   'header'      => {
