@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = "fullcalendar_engine"
   s.version     = FullcalendarEngine::VERSION
   s.license     = 'MIT'
-  s.authors     = ["Team Vinsol"]
+  s.authors     = ["Mohit Bansal", "Aditya Kapoor", "Shubham Gupta"]
   s.email       = ["info@vinsol.com"]
   s.homepage    = "http://vinsol.com"
   s.summary     = "Engine Implementation of jQuery Full Calendar"
