@@ -38,7 +38,7 @@ module FullcalendarEngine
     end
 
     def recurring_period(period)
-      Event::REPEATS.key(period).to_s.downcase
+      Event::REPEATS.key(period.titleize).to_s.downcase
     end
 
     private 
