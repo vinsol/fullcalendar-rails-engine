@@ -4,7 +4,7 @@
 
 <%= content_tag :script do %>
   full_calendar_options = <%= FullcalendarEngine::Configuration.to_json.html_safe %>
-  app_path              = full_calendar_options["mount_path"]
+  app_path              = "<%= FullcalendarEngine::Configuration["mount_path"] %>"
 <% end %>
 
 <div>
