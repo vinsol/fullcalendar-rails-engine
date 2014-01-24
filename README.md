@@ -38,7 +38,7 @@ FullcalendarEngine::EventSeries.create({
     :description => 'description', 
     :starttime => Time.current,
     :endtime => Time.current + 10.minute, 
-    :period => 'Daily|monthly|yearly', 
+    :period => 'daily', 
     :frequency => '4'
 })
 ```
