@@ -12,7 +12,7 @@ module FullcalendarEngine
       if @event.save
         render :nothing => true
       else
-        render :text => event.errors.full_messages.to_sentence, :status => 422
+        render :text => @event.errors.full_messages.to_sentence, :status => 422
       end
     end
 
