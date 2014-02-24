@@ -4,6 +4,30 @@
 full_calendar_options = <%= FullcalendarEngine::Configuration.to_json.html_safe %>
 app_path              = "<%= FullcalendarEngine::Configuration["mount_path"] %>"
 
+$.extend(full_calendar_options, {
+  loading: function(bool){
+    if (bool) 
+      $('#loading').show();
+    else
+      $('#loading').hide();
+  },
+  eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+    FullcalendarEngine.Events.move(event, dayDelta, minuteDelta, allDay);
+  },
+  eventResize: function(event, dayDelta, minuteDelta, revertFunc){
+    FullcalendarEngine.Events.resize(event, dayDelta, minuteDelta);
+  },
+  eventClick: function(event, jsEvent, view){
+    FullcalendarEngine.Events.showEventDetails(event);
+  },
+  select: function( startDate, endDate, allDay, jsEvent, view ) {
+    FullcalendarEngine.Form.display({ 
+      starttime: new Date(startDate.getTime()), 
+      endtime:   new Date(endDate.getTime()), 
+      allDay:    allDay 
+    })
+  }
+})
 
 if (typeof(FullcalendarEngine) === 'undefined') { FullcalendarEngine = {}; }
 
@@ -11,19 +35,15 @@ FullcalendarEngine = {
   Form: {
     display: function(options) {
       if (typeof(options) == 'undefined') { options = {} }
+      FullcalendarEngine.Form.fetch(options)
+    },
+    render: function(options){
       $('#event_form').trigger('reset');
-
       var startTime = options['starttime'] || new Date(), endTime = options['endtime'] || new Date(startTime.getTime());
-
       if(startTime.getTime() == endTime.getTime()) { endTime.setMinutes(startTime.getMinutes() + 15); }
-
       FullcalendarEngine.setTime('#event_starttime', startTime)
       FullcalendarEngine.setTime('#event_endtime', endTime)
-
       $('#event_all_day').attr('checked', options['allDay'])
-
-      FullcalendarEngine.Form.fetch()
-
       $('#create_event_dialog').dialog({
         title: 'New Event',
         modal: true,
@@ -31,12 +51,13 @@ FullcalendarEngine = {
         close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
       });
     },
-    fetch: function(){
+    fetch: function(options){
       $.ajax({
         type: 'get',
         dataType: 'script',
         async: true,
-        url: FullcalendarEngine.app_path() + "/events/new"
+        url: FullcalendarEngine.app_path() + "/events/new",
+        success: function(){ FullcalendarEngine.Form.render(options) }
       });
     },
     authenticity_token: function(){
@@ -84,7 +105,7 @@ FullcalendarEngine = {
       });
     },
     refetch_events_and_close_dialog: function() {
-      $('#calendar').fullCalendar( 'refetchEvents' );
+      $('.calendar').fullCalendar('refetchEvents');
       $('.dialog:visible').dialog('destroy');
     },
     showEventDetails: function(event){
@@ -135,11 +156,6 @@ FullcalendarEngine = {
       }
     }
   },
-  fullCalendarOptions: function(){
-    $.ajax({
-
-    })
-  },
   setTime: function(type, time) {
     var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
     $year.val(time.getFullYear());
@@ -152,8 +168,6 @@ FullcalendarEngine = {
     return (app_path || window.location.pathname.match(/\/(\w)+/)[0])
   }
 }
-
-FullcalendarEngine.fullCalendarOptions()
 
 $(document).ready(function(){
   $('#create_event_dialog, #event_desc_dialog').on('submit', "#event_form", function(event) {
@@ -179,31 +193,6 @@ $(document).ready(function(){
 
     function handle_error(xhr) {
       alert(xhr.responseText);
-    }
-  })
-
-  $.extend(full_calendar_options, {
-    loading: function(bool){
-      if (bool)
-        $('#loading').show();
-      else
-        $('#loading').hide();
-    },
-    eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
-      FullcalendarEngine.Events.move(event, dayDelta, minuteDelta, allDay);
-    },
-    eventResize: function(event, dayDelta, minuteDelta, revertFunc){
-      FullcalendarEngine.Events.resize(event, dayDelta, minuteDelta);
-    },
-    eventClick: function(event, jsEvent, view){
-      FullcalendarEngine.Events.showEventDetails(event);
-    },
-    select: function( startDate, endDate, allDay, jsEvent, view ) {
-      FullcalendarEngine.Form.display({ 
-        starttime: new Date(startDate.getTime()), 
-        endtime:   new Date(endDate.getTime()), 
-        allDay:    allDay 
-      })
     }
   })
 });

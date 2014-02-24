@@ -1,6 +1,6 @@
 #FullcalendarEngine
 
-### This engine supports only Rails 4 apps.
+## This engine supports only Rails 4 apps.
 
 ### Installation
 
@@ -10,9 +10,9 @@ Add fullcalendar_engine to your Gemfile:
 gem 'fullcalendar_engine'
 ```
 
-#### Bundle your dependencies and run the installation generator:
+#### Bundle install your dependencies and run the installation generator:
 ```
-bundle
+bundle install
 bundle exec rails g fullcalendar_engine:install
 ```
 
@@ -50,6 +50,27 @@ mount_path: "<path you have mounted your engine on>"
 
 The engine can have its own layout, you can add `layout` option to the configuration file. Besides this, all the options which are available with the fullcalendar.js are listed in the *`fullcalendar.yml.dummy`* file.
 
+## Using the Engine in some other views
+Initially the engine is designed to work only on the mount point but you can now use this engine anywhere in your app but there is an HTML structure which this engine expects. 
+
+- Create a link or button for the creation of the new events. On its click a modal popup would appear. You can bind the dialog form generation as follows. Assign it any class or id you want.
+```
+  $('<your-selector>').click(function(event) {
+    FullcalendarEngine.Form.display()
+    event.preventDefault();
+  });
+```
+- For the calendar events the following HTML code must be copied and pasted directly into your view.
+```
+  <div>
+    <div class="calendar"></div>
+  </div>
+  <div id = "create_event_dialog" class="dialog" style ="display:none;"></div>
+  <div id = "event_desc_dialog" class="dialog" style ="display:none;"></div>
+```
+
+- The `create_event_dialog` is the container for the dialog form.
+- The `event_desc_dialog` is the container for the display of the details of the event.
 
 Credits
 -------
