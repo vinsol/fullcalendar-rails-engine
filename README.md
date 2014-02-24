@@ -1,6 +1,6 @@
 #FullcalendarEngine
 
-### This engine is made only on Rails 4 apps.
+### This engine supports only Rails 4 apps.
 
 ### Installation
 
