@@ -1,8 +1,8 @@
 <p>
-  <%= link_to 'Create Event', 'javascript:void()', :id => 'new_event' %>
+  <%= link_to 'Create Event', 'javascript:void()', id: 'new_event' %>
 </p>
 <div>
-  <div id='calendar'></div>
+  <div class='calendar'></div>
 </div>
 <div id="event_desc_dialog" class="dialog" style="display:none;"></div>
 <div id="create_event_dialog" class="dialog" style ="display:none;">
@@ -11,7 +11,7 @@
 
 <script>
   $(document).ready(function(){
-    $('#calendar').fullCalendar(full_calendar_options);
+    $('.calendar').fullCalendar(full_calendar_options);
     // page is now ready, initialize the calendar...
     $('#new_event').click(function(event) {
       FullcalendarEngine.Form.display()
