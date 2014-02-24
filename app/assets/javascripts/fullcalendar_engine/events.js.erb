@@ -1,5 +1,10 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
+
+full_calendar_options = <%= FullcalendarEngine::Configuration.to_json.html_safe %>
+app_path              = "<%= FullcalendarEngine::Configuration["mount_path"] %>"
+
+
 if (typeof(FullcalendarEngine) === 'undefined') { FullcalendarEngine = {}; }
 
 FullcalendarEngine = {
@@ -17,7 +22,7 @@ FullcalendarEngine = {
 
       $('#event_all_day').attr('checked', options['allDay'])
 
-      // FullcalendarEngine.Form.fetch()
+      FullcalendarEngine.Form.fetch()
 
       $('#create_event_dialog').dialog({
         title: 'New Event',
@@ -130,6 +135,11 @@ FullcalendarEngine = {
       }
     }
   },
+  fullCalendarOptions: function(){
+    $.ajax({
+
+    })
+  },
   setTime: function(type, time) {
     var $year = $(type + '_1i'), $month = $(type + '_2i'), $day = $(type + '_3i'), $hour = $(type + '_4i'), $minute = $(type + '_5i')
     $year.val(time.getFullYear());
@@ -142,6 +152,8 @@ FullcalendarEngine = {
     return (app_path || window.location.pathname.match(/\/(\w)+/)[0])
   }
 }
+
+FullcalendarEngine.fullCalendarOptions()
 
 $(document).ready(function(){
   $('#create_event_dialog, #event_desc_dialog').on('submit', "#event_form", function(event) {
