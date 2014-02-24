@@ -4,6 +4,31 @@
 full_calendar_options = <%= FullcalendarEngine::Configuration.to_json.html_safe %>
 app_path              = "<%= FullcalendarEngine::Configuration["mount_path"] %>"
 
+$.extend(full_calendar_options, {
+  loading: function(bool){
+    if (bool) 
+      $('#loading').show();
+    else
+      $('#loading').hide();
+  },
+  eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
+    FullcalendarEngine.Events.move(event, dayDelta, minuteDelta, allDay);
+  },
+  eventResize: function(event, dayDelta, minuteDelta, revertFunc){
+    FullcalendarEngine.Events.resize(event, dayDelta, minuteDelta);
+  },
+  eventClick: function(event, jsEvent, view){
+    FullcalendarEngine.Events.showEventDetails(event);
+  },
+  select: function( startDate, endDate, allDay, jsEvent, view ) {
+    FullcalendarEngine.Form.display({ 
+      starttime: new Date(startDate.getTime()), 
+      endtime:   new Date(endDate.getTime()), 
+      allDay:    allDay 
+    })
+  }
+})
+
 if (typeof(FullcalendarEngine) === 'undefined') { FullcalendarEngine = {}; }
 
 FullcalendarEngine = {
@@ -168,31 +193,6 @@ $(document).ready(function(){
 
     function handle_error(xhr) {
       alert(xhr.responseText);
-    }
-  })
-
-  $.extend(full_calendar_options, {
-    loading: function(bool){
-      if (bool)
-        $('#loading').show();
-      else
-        $('#loading').hide();
-    },
-    eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
-      FullcalendarEngine.Events.move(event, dayDelta, minuteDelta, allDay);
-    },
-    eventResize: function(event, dayDelta, minuteDelta, revertFunc){
-      FullcalendarEngine.Events.resize(event, dayDelta, minuteDelta);
-    },
-    eventClick: function(event, jsEvent, view){
-      FullcalendarEngine.Events.showEventDetails(event);
-    },
-    select: function( startDate, endDate, allDay, jsEvent, view ) {
-      FullcalendarEngine.Form.display({ 
-        starttime: new Date(startDate.getTime()), 
-        endtime:   new Date(endDate.getTime()), 
-        allDay:    allDay 
-      })
     }
   })
 });
