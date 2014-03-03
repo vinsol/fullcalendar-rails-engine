@@ -1,4 +1,4 @@
-<%= form_for @event ||= FullcalendarEngine::Event.new, :html => { :id => 'event_form' } do |f| %>
+<%= form_for @event ||= FullcalendarEngine::Event.new, :html => { id: 'event_form' } do |f| %>
 <p>
   <%=f.label :title %>
   <br/>
@@ -25,14 +25,13 @@
 </p>
 <p>
   <%=f.label :period, "Repeats" %>
-  <%=f.select :period, FullcalendarEngine::Event::REPEATS.values,{}, :onchange => "FullcalendarEngine.Events.showPeriodAndFrequency(this.value);" %>
+  <%=f.select :period, FullcalendarEngine::Event::REPEATS.values, {}, onchange: "FullcalendarEngine.Events.showPeriodAndFrequency(this.value);" %>
 </p>
 <p id = "frequency" style = "display:none;">
   <%=f.label :frequency, "Repeat every" %>
   <%=f.select :frequency, (1..30).to_a %> <span id = "period"></span>
 </p>
-<%=f.hidden_field :id, :value => @event.id %>
 <p>
-  <%=f.submit 'Create' %> <span id = "creating_events" class="spinner" style = "display:none;">Creating, Please wait...</span>
+  <%=f.submit %> <span id = "creating_events" class="spinner" style = "display:none;">Creating, Please wait...</span>
 </p>
 <%end %>
