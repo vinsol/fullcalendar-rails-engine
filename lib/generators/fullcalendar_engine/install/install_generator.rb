@@ -2,14 +2,26 @@ module FullcalendarEngine
   module Generators
     class InstallGenerator < Rails::Generators::Base
 
-      class_option :auto_run_migrations, :type => :boolean, :default => false
+      class_option :auto_run_migrations, type: :boolean, default: false
+
+      ASSET_BASE_PATH = 'app/assets'
+      JS_BASE_PATH    = "#{ASSET_BASE_PATH}/javascripts"
+      CSS_BASE_PATH   = "#{ASSET_BASE_PATH}/stylesheets"
 
       def add_javascripts
-        append_file 'app/assets/javascripts/application.js', "//= require fullcalendar_engine/application\n"
+        if File.exist?("#{JS_BASE_PATH}/application.js")
+          append_file "#{JS_BASE_PATH}/application.js", "//= require fullcalendar_engine/application\n"
+        elsif File.exist?("#{JS_BASE_PATH}/application.js.coffee")
+          append_file "#{JS_BASE_PATH}/application.js.coffee", "//= require fullcalendar_engine/application\n"
+        end
       end
 
       def add_stylesheets
-        inject_into_file 'app/assets/stylesheets/application.css', " *= require fullcalendar_engine/application\n", :before => /\*\//, :verbose => true
+        if File.exist?("#{CSS_BASE_PATH}/application.css")
+          inject_into_file "#{CSS_BASE_PATH}/application.css", " *= require fullcalendar_engine/application\n", :before => /\*\//, :verbose => true
+        elsif File.exist?("#{CSS_BASE_PATH}/application.css.scss")
+          inject_into_file "#{CSS_BASE_PATH}/application.css.scss", " *= require fullcalendar_engine/application\n", :before => /\*\//, :verbose => true
+        end
       end
 
       def add_migrations
