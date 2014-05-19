@@ -67,6 +67,10 @@ Initially the engine is designed to work only on the mount point but you can now
   </div>
   <div id = "create_event_dialog" class="dialog" style ="display:none;"></div>
   <div id = "event_desc_dialog" class="dialog" style ="display:none;"></div>
+  
+  <script type = 'javascript'>
+    $('.calendar').fullCalendar(full_calendar_options);
+  </script>
 ```
 
 - The `create_event_dialog` is the container for the dialog form.
