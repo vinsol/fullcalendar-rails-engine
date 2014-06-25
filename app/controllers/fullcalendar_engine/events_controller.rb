@@ -22,7 +22,7 @@ module FullcalendarEngine
       end
     end
 
-    def get_events
+    def index
       start_time = Time.at(params[:start].to_i).to_formatted_s(:db)
       end_time   = Time.at(params[:end].to_i).to_formatted_s(:db)
 
