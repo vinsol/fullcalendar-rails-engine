@@ -1,7 +1,7 @@
 module FullcalendarEngine
   class EventSeries < ActiveRecord::Base
     
-    attr_accessor :title, :description, :commit_button
+    attr_accessor :title, :description, :commit_button, :color
 
     validates :frequency, :period, :starttime, :endtime, :title, :description, :presence => true
 
