@@ -108,7 +108,7 @@ module FullcalendarEngine
     end
 
     def event_params
-      params.require(:event).permit('title', 'description', 'starttime', 'endtime', 'all_day', 'period', 'frequency', 'commit_button', 'color')
+      params.require(:event).permit(:title, :description, :starttime, :endtime, :all_day, :period, :frequency, :commit_button, :color)
     end
 
     def determine_event_type
