@@ -26,7 +26,7 @@ module FullcalendarEngine
       start_time = Time.at(params[:start].to_i).to_formatted_s(:db)
       end_time   = Time.at(params[:end].to_i).to_formatted_s(:db)
 
-      @events = Event.where('
+      @events = FullcalendarEngine::Event.where('
                   (starttime >= :start_time and endtime <= :end_time) or
                   (starttime >= :start_time and endtime > :end_time and starttime <= :end_time) or
                   (starttime <= :start_time and endtime >= :start_time and endtime <= :end_time) or
@@ -36,10 +36,11 @@ module FullcalendarEngine
       @events.each do |event|
         events << { id: event.id,
                     title: event.title,
-                    description: event.description || '', 
+                    description: event.description || '',
                     start: event.starttime.iso8601,
                     end: event.endtime.iso8601,
                     allDay: event.all_day,
+                    object_id: event.object_id,
                     recurring: (event.event_series_id) ? true : false }
       end
       render json: events.to_json
@@ -59,12 +60,12 @@ module FullcalendarEngine
       if @event
         @event.endtime = make_time_from_minute_and_day_delta(@event.endtime)
         @event.save
-      end    
+      end
       render nothing: true
     end
 
     def edit
-      render json: { form: render_to_string(partial: 'edit_form') } 
+      render json: { form: render_to_string(partial: 'edit_form') }
     end
 
     def update
@@ -73,7 +74,7 @@ module FullcalendarEngine
         @events = @event.event_series.events
         @event.update_events(@events, event_params)
       when 'Update All Following Occurrence'
-        @events = @event.event_series.events.where('starttime > :start_time', 
+        @events = @event.event_series.events.where('starttime > :start_time',
                                                    start_time: @event.starttime.to_formatted_s(:db)).to_a
         @event.update_events(@events, event_params)
       else
@@ -100,7 +101,7 @@ module FullcalendarEngine
     private
 
     def load_event
-      @event = Event.where(:id => params[:id]).first
+      @event = FullcalendarEngine::Event.where(:id => params[:id]).first
       unless @event
         render json: { message: "Event Not Found.."}, status: 404 and return
       end
@@ -112,9 +113,9 @@ module FullcalendarEngine
 
     def determine_event_type
       if params[:event][:period] == "Does not repeat"
-        @event = Event.new(event_params)
+        @event = FullcalendarEngine::Event.new(event_params)
       else
-        @event = EventSeries.new(event_params)
+        @event = FullcalendarEngine::EventSeries.new(event_params)
       end
     end
 
