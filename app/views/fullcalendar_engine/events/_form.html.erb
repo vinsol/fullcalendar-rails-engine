@@ -24,6 +24,10 @@
   <%=f.check_box :all_day %>
 </p>
 <p>
+  <%=f.label :color %>
+  <%=f.color_field :color %>
+</p>
+<p>
   <%=f.label :period, "Repeats" %>
   <%=f.select :period, FullcalendarEngine::Event::REPEATS.values, {}, onchange: "FullcalendarEngine.Events.showPeriodAndFrequency(this.value);" %>
 </p>
