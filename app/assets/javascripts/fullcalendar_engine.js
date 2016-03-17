@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require moment
-//= require ./fullcalendar_engine/events
 //= require fullcalendar
 //= require fullcalendar/gcal
 //= require fullcalendar/lang-all
+//= require ./fullcalendar_engine/events
