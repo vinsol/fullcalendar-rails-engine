@@ -124,7 +124,7 @@ module FullcalendarEngine
     end
 
     def event_color(event)
-      event.color.presence || FullcalendarEngine.config.defaultColor
+      event.color.presence || FullcalendarEngine.config.default_color
     end
   end
 end
