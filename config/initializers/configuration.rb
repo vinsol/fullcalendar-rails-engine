@@ -12,7 +12,8 @@ FullcalendarEngine::Configuration = {
   'slotMinutes' => 15,
   'dragOpacity' => 0.5,
   'selectable'  => true,
-  'timeFormat'  => "h:mm t{ - h:mm t}"
+  'timeFormat'  => "h:mm t{ - h:mm t}",
+  'defaultColor' => '#3B91AD'
 }
 FullcalendarEngine::Configuration.merge!(config)
 FullcalendarEngine::Configuration['events'] = "#{FullcalendarEngine::Configuration['mount_path']}/events/get_events"

@@ -124,11 +124,7 @@ module FullcalendarEngine
     end
 
     def set_event_color(event)
-      if event.color == nil
-        '#3B91AD' #default color
-      else
-        event.color 
-      end
+      event.color.presence || FullcalendarEngine.config.defaultColor
     end
   end
 end
