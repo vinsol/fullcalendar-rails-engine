@@ -41,7 +41,7 @@ module FullcalendarEngine
                     end: event.endtime.iso8601,
                     allDay: event.all_day,
                     recurring: (event.event_series_id) ? true : false,
-                    color: set_event_color(event) }
+                    color: event_color(event) }
       end
       render json: events.to_json
     end
@@ -123,7 +123,7 @@ module FullcalendarEngine
       params[:minute_delta].to_i.minutes.from_now((params[:day_delta].to_i).days.from_now(event_time))
     end
 
-    def set_event_color(event)
+    def event_color(event)
       event.color.presence || FullcalendarEngine.config.defaultColor
     end
   end
