@@ -40,7 +40,8 @@ module FullcalendarEngine
                     start: event.starttime.iso8601,
                     end: event.endtime.iso8601,
                     allDay: event.all_day,
-                    recurring: (event.event_series_id) ? true : false }
+                    recurring: (event.event_series_id) ? true : false,
+                    color: event_color(event) }
       end
       render json: events.to_json
     end
@@ -107,7 +108,7 @@ module FullcalendarEngine
     end
 
     def event_params
-      params.require(:event).permit('title', 'description', 'starttime', 'endtime', 'all_day', 'period', 'frequency', 'commit_button')
+      params.require(:event).permit(:title, :description, :starttime, :endtime, :all_day, :period, :frequency, :commit_button, :color)
     end
 
     def determine_event_type
@@ -120,6 +121,10 @@ module FullcalendarEngine
 
     def make_time_from_minute_and_day_delta(event_time)
       params[:minute_delta].to_i.minutes.from_now((params[:day_delta].to_i).days.from_now(event_time))
+    end
+
+    def event_color(event)
+      event.color.presence || FullcalendarEngine.config.default_color
     end
   end
 end
