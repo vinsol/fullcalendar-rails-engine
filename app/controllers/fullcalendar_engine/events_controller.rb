@@ -39,7 +39,7 @@ module FullcalendarEngine
                     start: event.starttime.iso8601,
                     end: event.endtime.iso8601,
                     allDay: event.all_day,
-                    object_id: event.object_id,
+                    slug: event.object.slug,
                     recurring: (event.event_series_id) ? true : false }
       end
       render json: events.to_json
