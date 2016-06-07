@@ -7,6 +7,7 @@ module FullcalendarEngine
     validate :validate_timings
 
     belongs_to :event_series
+    belongs_to :object, polymorphic: true
 
     REPEATS = {
       :no_repeat => "Does not repeat",

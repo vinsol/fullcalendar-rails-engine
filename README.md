@@ -6,9 +6,31 @@
 
 Add fullcalendar_engine to your Gemfile:
 
-``` 
+```
 gem 'fullcalendar_engine'
 ```
+
+### Usage
+
+Add the following directive to your Javascript manifest file (application.js):
+
+    //= require fullcalendar_engine
+
+Add the following directive to your css manifest file (application.css):
+
+     *= require fullcalendar_engine
+
+Add the following directive to your css to application-print.css (create it if you don't have):
+
+    *= require fullcalendar_engine-print
+
+Add the following directive to your application.html file:
+
+    = stylesheet_link_tag 'application-print', :media => 'print'
+
+Add application-print.css to precompile assets:
+
+    config.assets.precompile += %w( application-print.css )
 
 #### Bundle install your dependencies and run the installation generator:
 ```
@@ -23,22 +45,22 @@ mount FullcalendarEngine::Engine => "/fullcalendar_engine"
 
 #### Create Single Event
 ```
-FullcalendarEngine::Event.create({ 
-    :title => 'title', 
-    :description => 'description', 
-    :starttime => Time.current, 
+FullcalendarEngine::Event.create({
+    :title => 'title',
+    :description => 'description',
+    :starttime => Time.current,
     :endtime => Time.current + 10.minute
 })
 ```
 
 #### Create Event Series
 ```
-FullcalendarEngine::EventSeries.create({ 
-    :title => 'title', 
-    :description => 'description', 
+FullcalendarEngine::EventSeries.create({
+    :title => 'title',
+    :description => 'description',
     :starttime => Time.current,
-    :endtime => Time.current + 10.minute, 
-    :period => 'daily', 
+    :endtime => Time.current + 10.minute,
+    :period => 'daily',
     :frequency => '4'
 })
 ```
@@ -51,7 +73,7 @@ mount_path: "<path you have mounted your engine on>"
 The engine can have its own layout, you can add `layout` option to the configuration file. Besides this, all the options which are available with the fullcalendar.js are listed in the *`fullcalendar.yml.dummy`* file.
 
 ## Using the Engine in some other views
-Initially the engine is designed to work only on the mount point but you can now use this engine anywhere in your app but there is an HTML structure which this engine expects. 
+Initially the engine is designed to work only on the mount point but you can now use this engine anywhere in your app but there is an HTML structure which this engine expects.
 
 - Create a link or button for the creation of the new events. On its click a modal popup would appear. You can bind the dialog form generation as follows. Assign it any class or id you want.
 ```
@@ -67,7 +89,7 @@ Initially the engine is designed to work only on the mount point but you can now
   </div>
   <div id = "create_event_dialog" class="dialog" style ="display:none;"></div>
   <div id = "event_desc_dialog" class="dialog" style ="display:none;"></div>
-  
+
   <script type = 'javascript'>
     $('.calendar').fullCalendar(full_calendar_options);
   </script>
